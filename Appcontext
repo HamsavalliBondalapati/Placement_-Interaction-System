@@ -1,0 +1,50 @@
+import React, { createContext } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
+import defaultJobs from "../data/jobs.json";
+
+export const AppContext = createContext();
+
+export default function AppProvider({ children }) {
+  
+  const [jobs, setJobs] = useLocalStorage("jobs", defaultJobs);
+  const [applications, setApplications] = useLocalStorage("applications", []);
+  const [user, setUser] = useLocalStorage("user", null);
+
+  
+  const addJob = (job) => {
+    setJobs((prev) => [...prev, { id: Date.now(), ...job }]);
+  };
+
+  
+
+  
+  const applyToJob = (jobId, studentName) => {
+    setApplications((prev) => [
+      ...prev,
+      { id: Date.now(), jobId, studentName, status: "Applied" },
+    ]);
+  };
+
+  // change application status (for officer/admin)
+  const updateApplicationStatus = (appId, newStatus) => {
+    setApplications((prev) =>
+      prev.map((a) => (a.id === appId ? { ...a, status: newStatus } : a))
+    );
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        jobs,
+        addJob,
+        applications,
+        applyToJob,
+        updateApplicationStatus,
+        user,
+        setUser,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+}
