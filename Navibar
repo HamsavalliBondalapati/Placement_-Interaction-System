@@ -1,0 +1,12 @@
+import React from "react";
+
+export default function JobCard({ job, onApply }) {
+  return (
+    <div className="card">
+      <h3>{job.title}</h3>
+      <div className="small-muted">{job.company} • {job.location}</div>
+      <p>{job.description}</p>
+      <button onClick={() => onApply(job.id)}>Apply</button>
+    </div>
+  );
+}
