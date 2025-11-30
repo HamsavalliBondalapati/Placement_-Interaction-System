@@ -1,0 +1,54 @@
+import React, { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
+
+export default function AdminDashboard() {
+  const { jobs, applications, updateApplicationStatus } = useContext(AppContext);
+  const [filter, setFilter] = useState("All");
+
+  return (
+    <div>
+      <h2>Admin Dashboard</h2>
+
+      <div className="card">
+        <h3>All Jobs</h3>
+        {jobs.length === 0 && <div>No jobs found</div>}
+        {jobs.map((j) => (
+          <div key={j.id} style={{ padding: 6, borderBottom: "1px solid #eee" }}>
+            <strong>{j.title}</strong> — {j.company}
+            <div className="small-muted">{j.location}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="card">
+        <h3>Applications</h3>
+        <div style={{ marginBottom: 8 }}>
+          <label>
+            Filter status:
+            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+              <option>All</option>
+              <option>Applied</option>
+              <option>Shortlisted</option>
+              <option>Rejected</option>
+              <option>Placed</option>
+            </select>
+          </label>
+        </div>
+
+        {applications.length === 0 && <div>No applications yet</div>}
+        {applications
+          .filter((a) => filter === "All" || a.status === filter)
+          .map((a) => (
+            <div key={a.id} style={{ padding: 8, borderBottom: "1px solid #eee" }}>
+              Student: {a.studentName} — Job ID: {a.jobId} — Status: {a.status}
+              <div style={{ marginTop: 6 }}>
+                <button onClick={() => updateApplicationStatus(a.id, "Shortlisted")}>Shortlist</button>
+                <button onClick={() => updateApplicationStatus(a.id, "Rejected")} style={{ marginLeft: 8 }}>Reject</button>
+                <button onClick={() => updateApplicationStatus(a.id, "Placed")} style={{ marginLeft: 8 }}>Place</button>
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
+  );
+}
