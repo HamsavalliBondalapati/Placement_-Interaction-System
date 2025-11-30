@@ -1,0 +1,50 @@
+import React, { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
+
+export default function EmployerDashboard() {
+  const { addJob } = useContext(AppContext);
+  const [title, setTitle] = useState("");
+  const [company, setCompany] = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+
+  const submit = () => {
+    if (!title || !company) return alert("Title and company required");
+    addJob({ title, company, location, description });
+    setTitle(""); setCompany(""); setLocation(""); setDescription("");
+    alert("Job posted");
+  };
+
+  return (
+    <div>
+      <h2>Employer Dashboard</h2>
+
+      <div className="card">
+        <h3>Post a Job</h3>
+        <div>
+          <label>Title<br />
+            <input value={title} onChange={(e)=>setTitle(e.target.value)} />
+          </label>
+        </div>
+        <div>
+          <label>Company<br />
+            <input value={company} onChange={(e)=>setCompany(e.target.value)} />
+          </label>
+        </div>
+        <div>
+          <label>Location<br />
+            <input value={location} onChange={(e)=>setLocation(e.target.value)} />
+          </label>
+        </div>
+        <div>
+          <label>Description<br />
+            <textarea value={description} onChange={(e)=>setDescription(e.target.value)} />
+          </label>
+        </div>
+        <div style={{ marginTop: 8 }}>
+          <button onClick={submit}>Post Job</button>
+        </div>
+      </div>
+    </div>
+  );
+}
