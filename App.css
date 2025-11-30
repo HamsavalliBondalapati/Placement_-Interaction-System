@@ -1,0 +1,44 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+nav.navbar {
+  background: #1976d2;
+  color: white;
+  padding: 10px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+nav.navbar a {
+  color: white;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+nav.navbar a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.main-content {
+  padding: 18px;
+  flex: 1;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  margin-bottom: 12px;
+}
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.small-muted { color: #666; font-size: 14px; }
